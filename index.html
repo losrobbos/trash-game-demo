@@ -11,13 +11,27 @@
       overflow: hidden;
     }
 
+    body.collide {
+      animation: shakeIt .7s; 
+    }
+
+    @keyframes shakeIt {
+      30% {
+        rotate: 5deg;
+      }
+      70% {
+        rotate: -10deg;
+      }
+      100% {
+        rotate: 0deg;
+      }
+    }
+
     .stats {
       position: absolute;
       padding: 10px;
       text-align: center;
-      left: 50vw;
-      translate: -50% 0;
-      width: 300px;
+      inset-inline: 10px;
       border: 2px solid limegreen;
       color: limegreen;
     }
@@ -123,6 +137,14 @@
           // update span with new score
           scoreSpan.innerText = score
           particle.remove()
+
+          // shake the body by putting a class on it
+          // which plays an animation
+
+          document.body.classList.add("collide")
+          setTimeout(() => {
+            document.body.classList.remove("collide")
+          }, 700)
         }
       })
     }, 300)
