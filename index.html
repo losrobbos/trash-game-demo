@@ -103,7 +103,7 @@
     // loope über HTML elements with class particle
     particles.forEach((particle, i) => {
       particle.style.backgroundColor = "green"
-      // particle.style.left = i % 2 === 0 ? "50%" : "80%"
+      // give random top / bottom position for particle
       particle.style.translate = `0 calc(-50% ${i % 2 === 0 ? "+ 25px" : "- 25px"})`;
 
       // code is executed every second 
@@ -116,7 +116,7 @@
       }, 1000 * (i + 3))
     })
 
-    // check collisions forever
+    // check collisions between two HTML elements
     const checkOverlap = (rect1, rect2) => !(rect1.right < rect2.left ||
       rect1.left > rect2.right ||
       rect1.bottom < rect2.top ||
@@ -138,10 +138,9 @@
           scoreSpan.innerText = score
           particle.remove()
 
-          // shake the body by putting a class on it
-          // which plays an animation
-
+          // shake the body by putting a class on it which plays a shake animation
           document.body.classList.add("collide")
+          // remove class again so animation on body can be played again
           setTimeout(() => {
             document.body.classList.remove("collide")
           }, 700)
