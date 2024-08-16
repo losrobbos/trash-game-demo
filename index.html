@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body {
+      background-color: black;
+      overflow: hidden;
+    }
+
+    .stats {
+      position: absolute;
+      padding: 10px;
+      text-align: center;
+      left: 50vw;
+      translate: -50% 0;
+      width: 300px;
+      border: 2px solid limegreen;
+      color: limegreen;
+    }
+
+    .hero,
+    .enemy {
+      position: absolute;
+      height: 100px;
+      width: 100px;
+      background-image: url(https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExd3lkeXU2emhidmg5Z2FzejlyY2t0bHI2ZG9wcm01ODNpZ21nZ2JuZSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/tTv2XaWhhmg8uCZ5iI/giphy-downsized.gif);
+      background-size: cover;
+      rotate: 90deg;
+      top: 50vh;
+      translate: 0 -50%;
+    }
+
+    .enemy {
+      background-image: url(https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExcXdhYzFwNzc0NWZ6Nnh4djRraWY2c2hlcDh6YjVqZHB0YThxZ3RpMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3oEduIwLTB806poveg/giphy.gif);
+      right: -200px;
+      rotate: 0deg;
+      scale: -1 1 1;
+      /* transform: scaleX(-1); */
+      animation: fadeIn 1s 3s forwards;
+    }
+
+    @keyframes fadeIn {
+      to {
+        right: 20px;
+      }
+    }
+
+    .particle {
+      position: absolute;
+      background-color: red;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      top: 50vh;
+      left: 30px;
+      opacity: 0;
+      transition: left 3s;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="hero"></div>
+  <div class="enemy"></div>
+  <div class="stats">Score: <span>0</span></div>
+
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+
+  <script>
+    const particles = document.querySelectorAll(".particle");
+    const enemy = document.querySelector(".enemy")
+    const scoreSpan = document.querySelector(".stats span")
+    let score = 0;
+
+    // loope über HTML elements with class particle
+    particles.forEach((particle, i) => {
+      particle.style.backgroundColor = "green"
+      // particle.style.left = i % 2 === 0 ? "50%" : "80%"
+      particle.style.translate = `0 calc(-50% ${i % 2 === 0 ? "+ 25px" : "- 25px"})`;
+
+      // code is executed every second 
+      // delay between each item of one second
+      setTimeout(() => {
+        // make visible
+        particle.style.opacity = 1;
+        // move left
+        particle.style.left = "120%"
+      }, 1000 * (i + 3))
+    })
+
+    // check collisions forever
+    const checkOverlap = (rect1, rect2) => !(rect1.right < rect2.left ||
+      rect1.left > rect2.right ||
+      rect1.bottom < rect2.top ||
+      rect1.top > rect2.bottom)
+
+      // check every 300ms a collision between particle and enemy
+    setInterval(() => {
+      const enemyRect = enemy.getBoundingClientRect()
+
+      // loop over particles and check for each particle
+      // if particle OVERLAPS with enemy DIV
+      particles.forEach(particle => {
+        const particleRect = particle.getBoundingClientRect()
+        const overlap = checkOverlap(enemyRect, particleRect)
+        if (overlap) {
+          // console.log("Da hats gecrasht!")
+          score++;
+          // update span with new score
+          scoreSpan.innerText = score
+          particle.remove()
+        }
+      })
+    }, 300)
+
+
+  </script>
+
+</body>
+
+</html>
