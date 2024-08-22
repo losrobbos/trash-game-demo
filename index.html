@@ -7,21 +7,31 @@
   <title>Trashy Game Unlimited</title>
   <style>
     body {
-      background-color: black;
+      margin: 0;
       overflow: hidden;
+      background-image: url(./img.png);
+      animation: moveBg 5s linear infinite;
     }
 
     body.collide {
-      animation: shakeIt .5s; 
+      animation: moveBg 5s linear infinite, shakeIt .5s;
+    }
+
+    @keyframes moveBg {
+      to {
+        background-position-x: -512px;
+      }
     }
 
     @keyframes shakeIt {
       30% {
         rotate: 5deg;
       }
+
       70% {
         rotate: -10deg;
       }
+
       100% {
         rotate: 0deg;
       }
@@ -29,6 +39,7 @@
 
     .stats {
       position: absolute;
+      margin: 10px;
       padding: 10px;
       text-align: center;
       inset-inline: 10px;
@@ -79,20 +90,23 @@
 
 <body>
 
-  <div class="hero"></div>
-  <div class="enemy"></div>
-  <div class="stats">Score: <span>0</span></div>
+  <main>
+    <div class="hero"></div>
+    <div class="enemy"></div>
+    <div class="stats">Score: <span>0</span></div>
 
-  <div class="particle"></div>
-  <div class="particle"></div>
-  <div class="particle"></div>
-  <div class="particle"></div>
-  <div class="particle"></div>
-  <div class="particle"></div>
-  <div class="particle"></div>
-  <div class="particle"></div>
-  <div class="particle"></div>
-  <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+
+  </main>
 
   <script>
     const particles = document.querySelectorAll(".particle");
@@ -122,7 +136,7 @@
       rect1.bottom < rect2.top ||
       rect1.top > rect2.bottom)
 
-      // check every 300ms a collision between particle and enemy
+    // check every 300ms a collision between particle and enemy
     setInterval(() => {
       const enemyRect = enemy.getBoundingClientRect()
 
